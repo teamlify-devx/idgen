@@ -138,6 +138,28 @@ uuid = uuidv4.Must()
 b := uuid.Bytes() // []byte, len 16
 ```
 
+### Parsing
+
+```go
+uuid, err := uuidv4.Parse("550e8400-e29b-41d4-a716-446655440000")
+```
+
+`Parse` validates the canonical `xxxxxxxx-xxxx-4xxx-xxxx-xxxxxxxxxxxx` format and checks the version nibble.
+
+### Error handling
+
+```go
+import "errors"
+
+uuid, err := uuidv4.Parse(someInput)
+if errors.Is(err, uuidv4.ErrInvalidUUID) {
+    // bad format, wrong length, invalid hex, or version != 4
+}
+if errors.Is(err, uuidv4.ErrRandomSource) {
+    // crypto/rand failure during New()
+}
+```
+
 ---
 
 ## UUID v7
@@ -169,6 +191,31 @@ Custom generator instance (useful for testing or multiple independent streams):
 ```go
 g := &uuidv7.Generator{}
 uuid, err := g.New()
+```
+
+### Parsing
+
+```go
+uuid, err := uuidv7.Parse("018e3b2a-1234-7abc-8def-000000000001")
+```
+
+`Parse` validates format and verifies the version nibble is 7.
+
+### Error handling
+
+```go
+import "errors"
+
+uuid, err := uuidv7.Parse(someInput)
+if errors.Is(err, uuidv7.ErrInvalidUUID) {
+    // bad format, wrong length, or invalid hex
+}
+if errors.Is(err, uuidv7.ErrWrongVersion) {
+    // parsed successfully but version nibble != 7
+}
+if errors.Is(err, uuidv7.ErrRandomSource) {
+    // crypto/rand failure during New()
+}
 ```
 
 ---
