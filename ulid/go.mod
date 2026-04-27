@@ -1,3 +1,3 @@
 module github.com/teamlify-devx/idgen/ulid
 
-go 1.23
+go 1.26
