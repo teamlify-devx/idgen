@@ -1,3 +1,3 @@
-module github.com/teamlify-devx/sfid/ulid
+module github.com/teamlify-devx/idgen/ulid
 
 go 1.23

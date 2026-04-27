@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/spf13/viper"
-	snowflake "github.com/teamlify-devx/sfid/snowflake"
+	snowflake "github.com/teamlify-devx/idgen/snowflake"
 )
 
 // ExampleNewNode demonstrates how to create a new Snowflake ID generator node.

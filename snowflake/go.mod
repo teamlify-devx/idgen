@@ -1,4 +1,4 @@
-module github.com/teamlify-devx/sfid/snowflake
+module github.com/teamlify-devx/idgen/snowflake
 
 go 1.26
 

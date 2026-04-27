@@ -1,3 +1,3 @@
-module github.com/teamlify-devx/sfid/uuidv7
+module github.com/teamlify-devx/idgen/uuidv7
 
 go 1.26

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/teamlify-devx/sfid/uuidv4"
+	"github.com/teamlify-devx/idgen/uuidv4"
 )
 
 // ExampleNew demonstrates basic UUID v4 generation.

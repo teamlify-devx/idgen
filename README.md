@@ -1,4 +1,7 @@
-# sfid — Distributed ID Generators for Go
+# idgen
+#### Distributed ID Generators for Go
+
+--- 
 
 A collection of zero-dependency, thread-safe ID generators for distributed systems.
 
@@ -12,16 +15,16 @@ A collection of zero-dependency, thread-safe ID generators for distributed syste
 ## Installation
 
 ```bash
-go get github.com/teamlify-devx/sfid
+go get github.com/teamlify-devx/idgen
 ```
 
 Import only the sub-package(s) you need:
 
 ```go
-import "github.com/teamlify-devx/sfid/snowflake"
-import "github.com/teamlify-devx/sfid/uuidv4"
-import "github.com/teamlify-devx/sfid/uuidv7"
-import "github.com/teamlify-devx/sfid/ulid"
+import "github.com/teamlify-devx/idgen/snowflake"
+import "github.com/teamlify-devx/idgen/uuidv4"
+import "github.com/teamlify-devx/idgen/uuidv7"
+import "github.com/teamlify-devx/idgen/ulid"
 ```
 
 ---
@@ -42,7 +45,7 @@ Twitter-inspired 64-bit integer IDs. Time-ordered, node-aware, and extremely fas
 ### Quick start
 
 ```go
-import "github.com/teamlify-devx/sfid/snowflake"
+import "github.com/teamlify-devx/idgen/snowflake"
 
 node, err := snowflake.NewNode()
 if err != nil {
@@ -122,7 +125,7 @@ func newID() int64 {
 Randomly generated UUID per RFC 4122. No dependencies beyond `crypto/rand`.
 
 ```go
-import "github.com/teamlify-devx/sfid/uuidv4"
+import "github.com/teamlify-devx/idgen/uuidv4"
 
 // Returns (UUID, error)
 uuid, err := uuidv4.New()
@@ -167,7 +170,7 @@ if errors.Is(err, uuidv4.ErrRandomSource) {
 Time-ordered UUID per RFC 9562. Monotonic within the same millisecond (12-bit sequence counter).
 
 ```go
-import "github.com/teamlify-devx/sfid/uuidv7"
+import "github.com/teamlify-devx/idgen/uuidv7"
 
 // Package-level generator (thread-safe)
 uuid, err := uuidv7.New()
@@ -225,7 +228,7 @@ if errors.Is(err, uuidv7.ErrRandomSource) {
 Universally Unique Lexicographically Sortable Identifier. 48-bit timestamp + 80-bit random, encoded as a 26-character Crockford base32 string.
 
 ```go
-import "github.com/teamlify-devx/sfid/ulid"
+import "github.com/teamlify-devx/idgen/ulid"
 
 // Package-level generator (thread-safe)
 id, err := ulid.New()

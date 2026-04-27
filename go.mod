@@ -1,3 +1,3 @@
-module github.com/teamlify-devx/sfid
+module github.com/teamlify-devx/idgen
 
 go 1.26

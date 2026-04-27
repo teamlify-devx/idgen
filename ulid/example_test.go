@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/teamlify-devx/sfid/ulid"
+	"github.com/teamlify-devx/idgen/ulid"
 )
 
 // ExampleNew demonstrates basic ULID generation.
