@@ -1,0 +1,99 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: ['1.23']
+        module: ['.', 'snowflake', 'uuidv4', 'uuidv7', 'ulid']
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: ${{ matrix.go-version }}
+
+    - name: Cache Go modules
+      uses: actions/cache@v4
+      with:
+        path: ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ matrix.go-version }}-${{ matrix.module }}-${{ hashFiles(format('{0}/go.sum', matrix.module)) }}
+        restore-keys: |
+          ${{ runner.os }}-go-${{ matrix.go-version }}-${{ matrix.module }}-
+
+    - name: Download dependencies
+      working-directory: ${{ matrix.module }}
+      run: go mod download
+
+    - name: Run tests
+      working-directory: ${{ matrix.module }}
+      run: go test -v -race ./...
+
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        module: ['.', 'snowflake', 'uuidv4', 'uuidv7', 'ulid']
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.23'
+
+    - name: golangci-lint
+      uses: golangci/golangci-lint-action@v6
+      with:
+        version: latest
+        working-directory: ${{ matrix.module }}
+
+  go-fmt:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.23'
+
+    - name: Check formatting
+      run: |
+        for m in . snowflake uuidv4 uuidv7 ulid; do
+          echo "=== $m ==="
+          if [ -n "$(gofmt -s -l $m)" ]; then
+            echo "Go code in $m is not formatted:"
+            gofmt -s -d $m
+            exit 1
+          fi
+        done
+
+  go-vet:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        module: ['.', 'snowflake', 'uuidv4', 'uuidv7', 'ulid']
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.23'
+
+    - name: Run go vet
+      working-directory: ${{ matrix.module }}
+      run: go vet ./...

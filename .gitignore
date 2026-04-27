@@ -32,3 +32,12 @@ go.work.sum
 # Editor/IDE
 # .idea/
 # .vscode/
+
+# Test output
+*.log
+
+# Misc
+.DS_Store
+*.swp
+*.swo
+*~
